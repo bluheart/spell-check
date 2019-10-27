@@ -6,4 +6,6 @@
   <strong>A simple spell check npm package</strong>
 
   <h3>Built with 🦀🕸</h3>
-  Check <a hrf="https://github.com/rustwasm/wasm-pack">wasm-pack</a> for more info
+  <p>
+  Check <a href="https://github.com/rustwasm/wasm-pack">wasm-pack</a> for more info
+  </p>
