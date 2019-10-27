@@ -3,7 +3,7 @@
 
   <h1><code>spell-check</code></h1>
 
-  <strong>A simple spell check npm package</strong>
+  <strong>A simple spell checker</strong>
 
   <h3>Built with 🦀🕸</h3>
   <p>
