@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 
-type Alpha = Box<HashMap<char, Node>>;
+type Alpha = Option<Box<HashMap<char, Node>>>;
 
 #[wasm_bindgen]
 pub struct Node {
@@ -26,7 +26,7 @@ pub struct Trie {
 impl Trie {
 
     pub fn new() -> Self {
-        Trie { root: Node {terminal: false, alpha: Box::new(HashMap::new())} }
+        Trie { root: Node {terminal: false, alpha: Some(Box::new(HashMap::new()))} }
     }
 
     pub fn load(&mut self, file: String) {
@@ -38,22 +38,25 @@ impl Trie {
 
     //uses a depth first search to retrieve all
     //words with the given prefix
-    pub fn auto_complete(self, prefix: String) {
+    //pub fn auto_complete(self, prefix: String) {
 
-    }
+    //}
 
     //loads a word into Trie
     pub fn new_word(&mut self, word: String) {
         let mut iter = &mut self.root;
         for c in word.chars() {
-            if iter.alpha.contains_key(&c) {
-                iter = iter.alpha.get_mut(&c).unwrap();
-            }
-            else {
-                iter.alpha.insert(c, Node {terminal: false, alpha: Box::new(HashMap::new())});
-                iter = iter.alpha.get_mut(&c).unwrap();
+            if let Some(ref mut alpha) = iter.alpha {
+                if alpha.contains_key(&c) {
+                    iter = alpha.get_mut(&c).unwrap();
+                }
+                else {
+                    alpha.insert(c, Node {terminal: false, alpha: Some(Box::new(HashMap::new()))});
+                    iter = alpha.get_mut(&c).unwrap();
+                }
             }
         }
+        iter.alpha = None;
         iter.terminal = true;
     }
 
@@ -61,10 +64,12 @@ impl Trie {
     pub fn search(&mut self, word: String) -> bool {
         let mut iter: &mut Node = &mut self.root;
         for c in word.chars() {
-            if iter.alpha.contains_key(&c) {
-                iter = iter.alpha.get_mut(&c).expect("couldn't get node");
+            if let Some(ref mut alpha) = iter.alpha {
+                if alpha.contains_key(&c) {
+                    iter = alpha.get_mut(&c).expect("couldn't get node");
+                }
+                else { return false }
             }
-            else { return false }
         }
         return iter.terminal
     }
