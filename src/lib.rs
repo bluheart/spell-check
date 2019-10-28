@@ -36,12 +36,6 @@ impl Trie {
         }
     }
 
-    //uses a depth first search to retrieve all
-    //words with the given prefix
-    //pub fn auto_complete(self, prefix: String) {
-
-    //}
-
     //loads a word into Trie
     pub fn new_word(&mut self, word: String) {
         let mut iter = &mut self.root;
