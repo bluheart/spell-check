@@ -56,7 +56,6 @@ impl Trie {
                 }
             }
         }
-        iter.alpha = None;
         iter.terminal = true;
     }
 

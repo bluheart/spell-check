@@ -2,7 +2,7 @@
 name = "spell-checker"
 version = "0.1.0"
 authors = ["Caio Ribeiro <blueheart@tuta.io>"]
-edition = "2019"
+edition = "2018"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
